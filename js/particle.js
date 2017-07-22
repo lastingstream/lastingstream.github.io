@@ -7,9 +7,9 @@
 
 var canvasDiv = document.getElementById('particle-canvas');
 var options = {
-  particleColor: '#888',
-  interactive: true,
-  speed: 'fast',
+  particleColor: '#CCCCCC',
+  interactive: false,
+  speed: 'medium',
   density: 'medium'
 };
 var particleCanvas = new ParticleNetwork(canvasDiv, options);
