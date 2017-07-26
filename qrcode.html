@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>Testing QR code</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="./js/keythereum.min.js" type="text/javascript">
+
+    </script>
+    <style>
+        .flex-container {
+            display: -webkit-flex;
+            display: flex;
+            width: 400px;
+            height: 250px;
+            background-color: lightgrey;
+        }
+
+        .flex-item {
+            background-color: cornflowerblue;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        function generateBarCode() {
+            var options = {
+                kdf: "pbkdf2",
+                cipher: "aes-128-ctr",
+                kdfparams: {
+                    c: 262144,
+                    dklen: 32,
+                    prf: "hmac-sha256"
+                }
+            };
+            var params = { keyBytes: 32, ivBytes: 16 };
+
+            keythereum.create(params, function (dk) {
+
+                keythereum.dump('password', dk.privateKey, dk.salt, dk.iv, options, function (keyObject) {
+                    console.log(keyObject)
+                    console.log(dk.privateKey.toString('hex'))
+                    var nric = $('#text').val();
+                    var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + 'bazinga' + '&amp;size=50x50';
+                    $('#barcode').attr('src', url);
+                });
+            });
+        }
+        generateBarCode()
+    </script>
+</head>
+
+<body>
+    <div></div>
+    <a href='https://www.google.co.nz' target="_blank">bazinga </a>
+    <img id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=HelloWorld&amp;size=500x500" alt="" title="HELLO"
+        width="30" height="30" />
+    <br>
+    <button onclick="generateBarCode()">Click me</button>
+
+</body>
+
+</html>

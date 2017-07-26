@@ -32,7 +32,7 @@
     this.g.beginPath(), (this.g.fillStyle = this.particleColor), (this.g.globalAlpha = 0.7), this.g.arc(
       this.x,
       this.y,
-      3.5,
+      5.5,
       0,
       2 * Math.PI
     ), this.g.fill();
