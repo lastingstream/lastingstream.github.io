@@ -12,7 +12,7 @@
             display: flex;
             width: 100%;
             height: 60px;
-            background-color: darkslateblue;
+            background-color: #3b3b3b;
             align-items: center;
             justify-content: center;
             color: white;
@@ -43,7 +43,7 @@
             left: 136;
             top: 227;
             opacity: 0.7;
-            filter: alpha(opacity=50);
+            filter: alpha(opacity=70);
             -ms-transform: rotate(-20deg);
             /* IE 9 */
             -webkit-transform: rotate(-20deg);
@@ -52,15 +52,53 @@
             z-index: 2;
         }
 
-        .flex-item {
-            background-color: cornflowerblue;
+        .priv {
+            position: relative;
+            width: 60;
+            height: 60;
+            left: 381;
+            top: 306;
+            opacity: 0.7;
+            filter: alpha(opacity=70);
+            z-index: 2;
+        }
+
+
+        .protect-text {
+            position: relative;
+            text-align: center;
+            font-size: 8;
+            height: 20;
+            width: 90;
+            left: 154;
+            top: 218;
+            opacity: 0.7;
+            filter: alpha(opacity=70);
+            z-index: 3;
+            -ms-transform: rotate(-20deg);
+            /* IE 9 */
+            -webkit-transform: rotate(-20deg);
+            /* Safari */
+            transform: rotate(-20deg);
+        }
+
+        .btn {
+            position: absolute;
+            right:20px;
+            top:15px; 
+            background-color: rgba(0, 0, 0, 0);
             width: 100px;
-            height: 100px;
-            margin: 10px;
+            height: 40px;
+            color: white;
+        }
+        btn:focus {
+            background: olive;
         }
     </style>
     <script type="text/javascript">
         function generateBarCode() {
+            $('#privimg').attr('src', './img/qrholder.png');
+            $('#addrimg').attr('src', './img/qrholder.png');
             var options = {
                 kdf: "pbkdf2",
                 cipher: "aes-128-ctr",
@@ -75,15 +113,18 @@
             keythereum.create(params, function (dk) {
 
                 keythereum.dump('password', dk.privateKey, dk.salt, dk.iv, options, function (keyObject) {
-                    console.log(keyObject)
-                    console.log(dk.privateKey.toString('hex'))
+                    // console.log(keyObject)
+                    // console.log(dk.privateKey.toString('hex'))
 
                     let pubAddr = '0x' + keyObject.address;
-
+                    let prvAddr = '0x' + dk.privateKey.toString('hex')
                     // var nric = $('#text').val();
-                    var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + pubAddr + '&amp;size=150x150&bgcolor=f6e6d8';
+                    var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + pubAddr + '&amp;size=90x90&bgcolor=f6e6d8';
                     $('#addrimg').attr('src', url);
+                    var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + prvAddr + '&amp;size=60x60&bgcolor=cecdc7';
+                    $('#privimg').attr('src', url);
                     $('#link').text('0x' + keyObject.address)
+                    $('#linkp').text(prvAddr)
                 });
             });
         }
@@ -93,25 +134,41 @@
 
 <body>
     <div class="flex-container">
-        Generator
+        LastingStream ID Generator
+        <button class='btn' onclick="generateBarCode()">Re-Generate</button>
     </div>
     <div class="flex-content">
         <div class="product">
+            <img id='bgcolor' style="position:absolute; top:60px;left:0px;background-color:#d3cfce; width:100%; height:100% " src=""
+            />
             <img style="position:absolute;width:800px; z-index:1" src="./img/wood.jpg" />
-            <img id='addrimg' class="addr" src="" />
+            <img id='addrimg' class="addr" src="./img/qrholder.png" />
+            <img id='privimg' class="priv" src="./img/qrholder.png" />
+            <p class="protect-text">Protected by<br> Blockchain techonology</p>
         </div>
     </div>
-    <div class="flex-content">
-        <!-- <p>
-            <div>Address: <div>
-         <a  id='link' href='https://www.google.co.nz' target="_blank">bazinga </a>
-        <br> -->
+    <br>
+    <div id='log'>
+        <div style="position:relative;align-items:center;text-align:center;top:20px;">Address:<br>
+            <a id='link' href='https://www.google.co.nz' target="_blank"></a>
+        </div>
         <br>
-        <!-- <img id='barcode' src="" alt="" title="QRCODE" width="2" height="2" /> -->
-        <br>
-        <button class='btn' onclick="generateBarCode()">Generate</button>
-        </p>
+        <div style="position:relative;align-items:center;text-align:center;top:20px;">Private:<br>
+            <p id='linkp'></p>
+        </div>
     </div>
+    <!-- <div class="flex-content">
+        <div>Address:
+            <div>
+                <a id='link' href='https://www.google.co.nz' target="_blank">bazinga </a>
+                <br>
+                <br>
+                <img id='barcode' src="" alt="" title="QRCODE" width="2" height="2" />
+                <br>
+                <button class='btn' onclick="generateBarCode()">Generate</button>
+            </div>
+        </div>
+    </div> -->
 
 </body>
 
