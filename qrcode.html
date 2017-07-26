@@ -10,9 +10,46 @@
         .flex-container {
             display: -webkit-flex;
             display: flex;
-            width: 400px;
-            height: 250px;
-            background-color: lightgrey;
+            width: 100%;
+            height: 60px;
+            background-color: darkslateblue;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30;
+            font-weight: 700;
+        }
+
+        .flex-content {
+            display: -webkit-flex;
+            display: flex;
+            width: 100%;
+            background-color: white;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product {
+            width: 800;
+            height: 400;
+            margin: auto;
+            background-color: blue
+        }
+
+        .addr {
+            position: relative;
+            width: 90;
+            height: 90;
+            left: 136;
+            top: 227;
+            opacity: 0.7;
+            filter: alpha(opacity=50);
+            -ms-transform: rotate(-20deg);
+            /* IE 9 */
+            -webkit-transform: rotate(-20deg);
+            /* Safari */
+            transform: rotate(-20deg);
+            z-index: 2;
         }
 
         .flex-item {
@@ -40,9 +77,13 @@
                 keythereum.dump('password', dk.privateKey, dk.salt, dk.iv, options, function (keyObject) {
                     console.log(keyObject)
                     console.log(dk.privateKey.toString('hex'))
-                    var nric = $('#text').val();
-                    var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + 'bazinga' + '&amp;size=50x50';
-                    $('#barcode').attr('src', url);
+
+                    let pubAddr = '0x' + keyObject.address;
+
+                    // var nric = $('#text').val();
+                    var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + pubAddr + '&amp;size=150x150&bgcolor=f6e6d8';
+                    $('#addrimg').attr('src', url);
+                    $('#link').text('0x' + keyObject.address)
                 });
             });
         }
@@ -51,12 +92,26 @@
 </head>
 
 <body>
-    <div></div>
-    <a href='https://www.google.co.nz' target="_blank">bazinga </a>
-    <img id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=HelloWorld&amp;size=500x500" alt="" title="HELLO"
-        width="30" height="30" />
-    <br>
-    <button onclick="generateBarCode()">Click me</button>
+    <div class="flex-container">
+        Generator
+    </div>
+    <div class="flex-content">
+        <div class="product">
+            <img style="position:absolute;width:800px; z-index:1" src="./img/wood.jpg" />
+            <img id='addrimg' class="addr" src="" />
+        </div>
+    </div>
+    <div class="flex-content">
+        <!-- <p>
+            <div>Address: <div>
+         <a  id='link' href='https://www.google.co.nz' target="_blank">bazinga </a>
+        <br> -->
+        <br>
+        <!-- <img id='barcode' src="" alt="" title="QRCODE" width="2" height="2" /> -->
+        <br>
+        <button class='btn' onclick="generateBarCode()">Generate</button>
+        </p>
+    </div>
 
 </body>
 
