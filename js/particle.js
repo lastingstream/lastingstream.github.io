@@ -32,7 +32,7 @@
     this.g.beginPath(), (this.g.fillStyle = this.particleColor), (this.g.globalAlpha = 0.7), this.g.arc(
       this.x,
       this.y,
-      5.5,
+      2.5,
       0,
       2 * Math.PI
     ), this.g.fill();
@@ -42,7 +42,7 @@
       height: this.i.offsetHeight
     }), (b = void 0 !== b ? b : {}), (this.options = {
       particleColor: void 0 !== b.particleColor ? b.particleColor : "#fff",
-      background: void 0 !== b.background ? b.background : "#1a252f",
+      background: void 0 !== b.background ? b.background : "#6d69c2",
       interactive: void 0 !== b.interactive ? b.interactive : !0,
       velocity: this.setVelocity(b.speed),
       density: this.j(b.density)
@@ -194,9 +194,9 @@
 
 var canvasDiv = document.getElementById("particle-canvas");
 var options = {
-  particleColor: "#666666",
+  particleColor: "#fff",
   interactive: false,
   speed: "medium",
-  density: "medium"
+  density: "low"
 };
 var particleCanvas = new ParticleNetwork(canvasDiv, options);
